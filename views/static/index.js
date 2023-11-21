@@ -1,13 +1,12 @@
 const container = document.getElementById("render");
+const input = document.getElementById("code-input");
 const decryptContainer = document.getElementById("render-decrypt");
 let morse = "";
 
 let pressedTime;
 
 window.addEventListener("keydown", function() {
-    if (pressedTime && (performance.now() - pressedTime) > 400) {
-        renderSpace();
-    }
+    if (pressedTime && (performance.now() - pressedTime) > 500) renderSpace();
 });
 
 window.addEventListener("keyup", function(e) {
@@ -18,73 +17,24 @@ window.addEventListener("keyup", function(e) {
         renderLong();
         pressedTime = performance.now();
     }
-
-    decrypt();
 })
 
 function renderShort() {
     morse = morse + ".";
-    container.innerHTML = morse;
+    populate(morse);
 }
 
 function renderLong() {
     morse = morse + "-";
-    container.innerHTML = morse;
+    populate(morse);
 }
 
 function renderSpace() {
     morse = morse + " ";
-    container.innerHTML = morse;
+    populate(morse);
 }
 
-const mtoa = new Map([
-    [".-", "A"],
-    ["-...", "B"],
-    ["-.-.", "C"],
-    ["-..", "D"],
-    [".", "E"],
-    ["..-.", "F"],
-    ["--.", "G"],
-    ["....", "H"],
-    ["..", "I"],
-    [".---", "J"],
-    ["-.-", "K"],
-    [".-..", "L"],
-    ["--", "M"],
-    ["-.", "N"],
-    ["---", "O"],
-    [".--.", "P"],
-    ["--.-", "Q"],
-    [".-.", "R"],
-    ["...", "S"],
-    ["-", "T"],
-    ["..-", "U"],
-    ["...-", "V"],
-    [".--", "W"],
-    ["-..-", "X"],
-    ["-.--", "Y"],
-    ["--..", "Z"],
-    ["-----", "0"],
-    [".----", "1"],
-    ["..---", "2"],
-    ["...--", "3"],
-    ["....-", "4"],
-    [".....", "5"],
-    ["-....", "6"],
-    ["--...", "7"],
-    ["---..", "8"],
-    ["----.", "9"],
-    [".-.-.", "+"],
-    ["-...-", "="],
-]);
-
-function decrypt() {
-    let result = "";
-    const res = morse.split(" ");
-
-    for (let i = 0; i < res.length; i++) {
-        if (mtoa.has(res[i])) result = result + mtoa.get(res[i]);
-    }
-
-    decryptContainer.innerText = result;
+function populate(val) {
+    container.innerText = val;
+    input.value = val;
 }

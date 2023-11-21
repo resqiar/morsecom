@@ -22,6 +22,7 @@ func main() {
 
 	server.Static("/", "./views/static")
 
+	handlers.InitAPIHandler(server)
 	handlers.InitWebHandler(server)
 
 	if e := server.Listen(":5000"); e != nil {

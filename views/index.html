@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
         #render {
-            display: flex;
+            background: transparent;
             font-size: 72px;
         }
         </style>
@@ -16,11 +16,20 @@
         <p>Press Del to render SHORT morse code, press Shift to render LONG morse code. Space will be rendered if no key is pressed longer than 500ms</p>
 
         <p><em>Descrypted Morse Code</em></p>
-        <strong><div id="render-decrypt"></div></strong>
+        <strong>
+            <div id="render-decrypt" 
+                hx-trigger="keyup from:body delay:100ms"
+                hx-post="/api/decrypt" 
+                hx-include="[name='code']" 
+            >
+            </div>
+        </strong>
 
         <p><em>Raw Morse Code</em></p>
         <div id="render"></div>
+        <input id="code-input" type="hidden" name="code"/>
 
         <script src="index.js"></script>
+        <script src="htmx.min.js"></script>
     </body>
 </html>
