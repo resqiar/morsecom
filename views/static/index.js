@@ -5,8 +5,10 @@ let morse = "";
 
 let pressedTime;
 
-window.addEventListener("keydown", function() {
-    if (pressedTime && (performance.now() - pressedTime) > 500) renderSpace();
+window.addEventListener("keydown", function(e) {
+    if (e.code === "Delete" || e.key === "Shift") {
+        if (pressedTime && (performance.now() - pressedTime) > 500) renderSpace();
+    }
 });
 
 window.addEventListener("keyup", function(e) {
@@ -15,6 +17,9 @@ window.addEventListener("keyup", function(e) {
         pressedTime = performance.now();
     } else if (e.key === "Shift") {
         renderLong();
+        pressedTime = performance.now();
+    } else if (e.key === "Backspace") {
+        deleteOneStep();
         pressedTime = performance.now();
     }
 })
@@ -31,6 +36,11 @@ function renderLong() {
 
 function renderSpace() {
     morse = morse + " ";
+    populate(morse);
+}
+
+function deleteOneStep() {
+    morse = morse.slice(0, morse.length - 1);
     populate(morse);
 }
 
