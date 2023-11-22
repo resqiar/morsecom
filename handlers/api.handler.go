@@ -55,15 +55,14 @@ func InitAPIHandler(server *fiber.App) {
 	api.Post("/decrypt", func(c *fiber.Ctx) error {
 		code := c.FormValue("code")
 
-		var result string
+		var result strings.Builder
 
 		for _, v := range strings.Split(string(code), " ") {
-			val, ok := decode_list[v]
-			if ok {
-				result = result + val
+			if val, ok := decode_list[v]; ok {
+				result.WriteString(val)
 			}
 		}
 
-		return c.SendString(result)
+		return c.SendString(result.String())
 	})
 }
